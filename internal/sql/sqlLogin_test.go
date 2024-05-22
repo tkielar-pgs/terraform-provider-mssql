@@ -99,6 +99,11 @@ func (s *SqlLoginTestSuite) TestCreateSqlLogin() {
 			edition:  EDITION_ENTERPRISE,
 			sql:      "CREATE LOGIN [default_language] WITH PASSWORD='test_password', DEFAULT_LANGUAGE=[test_language], CHECK_EXPIRATION=OFF, CHECK_POLICY=ON",
 		},
+		"login with SID": {
+			settings: SqlLoginSettings{Name: "login_with_sid", Password: "test_password", Id: "0xE0EEDFAEC6DD7443BBFDE477C0D1E8A1"},
+			edition:  EDITION_ENTERPRISE,
+			sql:      "CREATE LOGIN [login_with_sid] WITH PASSWORD='test_password', SID=0xE0EEDFAEC6DD7443BBFDE477C0D1E8A1, CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF",
+		},
 		"Azure SQL": {
 			settings: SqlLoginSettings{
 				Name:                    "default_language",

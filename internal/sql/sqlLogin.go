@@ -12,6 +12,7 @@ import (
 const NullLoginId LoginId = "<null>"
 
 type SqlLoginSettings struct {
+	Id                      string
 	Name                    string
 	Password                string
 	MustChangePassword      bool
@@ -30,6 +31,10 @@ func (s SqlLoginSettings) toSqlOptions(ctx context.Context, conn Connection) str
 
 	builder := strings.Builder{}
 	builder.WriteString(fmt.Sprintf("PASSWORD='%s'", s.Password))
+
+	if s.Id != "" {
+		builder.WriteString(fmt.Sprintf(", SID=%s", s.Id))
+	}
 
 	if s.MustChangePassword && !isAzure {
 		builder.WriteString(" MUST_CHANGE")

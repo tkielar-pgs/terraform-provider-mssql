@@ -3,13 +3,14 @@ package sqlLogin
 import (
 	"context"
 	"fmt"
+	"strconv"
+
 	"github.com/PGSSoft/terraform-provider-mssql/internal/core/resource"
 	common2 "github.com/PGSSoft/terraform-provider-mssql/internal/services/common"
 	"github.com/PGSSoft/terraform-provider-mssql/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"strconv"
 
 	"github.com/PGSSoft/terraform-provider-mssql/internal/sql"
 	"github.com/PGSSoft/terraform-provider-mssql/internal/utils"
@@ -40,6 +41,7 @@ func (d resourceData) toSettings(ctx context.Context) sql.SqlLoginSettings {
 	}
 
 	return sql.SqlLoginSettings{
+		Id:                      d.Id.ValueString(),
 		Name:                    d.Name.ValueString(),
 		Password:                d.Password.ValueString(),
 		MustChangePassword:      d.MustChangePassword.ValueBool(),
@@ -93,7 +95,7 @@ func (r *res) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource
 	resp.Schema.Attributes = map[string]schema.Attribute{
 		"id": schema.StringAttribute{
 			MarkdownDescription: attrDescriptions["id"],
-			Computed:            true,
+			Optional:            true,
 			PlanModifiers: []planmodifier.String{
 				stringplanmodifier.UseStateForUnknown(),
 			},
