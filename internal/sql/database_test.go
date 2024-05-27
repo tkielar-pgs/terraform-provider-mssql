@@ -99,7 +99,7 @@ func (s *DatabaseTestSuite) TestCreteDatabaseNoCollation() {
 }
 
 func (s *DatabaseTestSuite) TestCreteDatabaseWithCollation() {
-	settings := DatabaseSettings{Name: "new_test_db", Collation: "new_test_db_collation"}
+	settings := DatabaseSettings{Name: "new_test_db", Collation: "new_test_db_collation", ForceDrop: false}
 	dbId := DatabaseId(1223464)
 	expectExactExec(s.mock, "CREATE DATABASE [%s] COLLATE %s", settings.Name, settings.Collation).
 		WillReturnResult(sqlmock.NewResult(0, 1))
@@ -111,7 +111,7 @@ func (s *DatabaseTestSuite) TestCreteDatabaseWithCollation() {
 }
 
 func (s *DatabaseTestSuite) TestGetSettings() {
-	expSettings := DatabaseSettings{Name: "test_db_name", Collation: "test_collation"}
+	expSettings := DatabaseSettings{Name: "test_db_name", Collation: "test_collation", ForceDrop: false}
 	s.expectDatabaseSettingQuery().
 		WithArgs(s.db.id).
 		WillReturnRows(newRows("name", "collation_name").AddRow(expSettings.Name, expSettings.Collation))
