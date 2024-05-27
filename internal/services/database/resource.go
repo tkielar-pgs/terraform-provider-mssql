@@ -41,6 +41,11 @@ func (r *res) Schema(ctx context.Context, req resource.SchemaRequest, resp *reso
 			Optional:            true,
 			Computed:            true,
 		},
+		"force_drop": schema.BoolAttribute{
+			MarkdownDescription: attrDescriptions["force_drop"],
+			Computed:            true,
+			Optional:            true,
+		},	
 	}
 }
 

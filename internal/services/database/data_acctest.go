@@ -11,7 +11,7 @@ import (
 func testDataSource(testCtx *acctest.TestContext) {
 	const resourceName = "data.mssql_database.test"
 	var dbId string
-	dbSettings := sql.DatabaseSettings{Name: "data_test_db", Collation: "SQL_Latin1_General_CP1_CS_AS"}
+	dbSettings := sql.DatabaseSettings{Name: "data_test_db", Collation: "SQL_Latin1_General_CP1_CS_AS", ForceDrop: false}
 
 	newDataResource := func(name string) string {
 		return fmt.Sprintf(`

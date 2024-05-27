@@ -44,6 +44,10 @@ func (l *listDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, r
 						MarkdownDescription: attrDescriptions["collation"],
 						Computed:            true,
 					},
+					"force_drop": schema.BoolAttribute{
+						MarkdownDescription: attrDescriptions["force_drop"],
+						Computed:            true,
+					},						
 				},
 			},
 		},

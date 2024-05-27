@@ -13,6 +13,7 @@ const NullDatabaseId = DatabaseId(-1)
 type DatabaseSettings struct {
 	Name      string
 	Collation string
+	ForceDrop bool
 }
 
 type DatabasePermission struct {
@@ -141,6 +142,9 @@ func (db *database) SetCollation(ctx context.Context, collation string) {
 
 func (db *database) Drop(ctx context.Context) {
 	settings := db.GetSettings(ctx)
+	if settings.ForceDrop {
+		db.conn.exec(ctx, fmt.Sprintf("ALTER DATABASE [%s] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;", settings.Name))	
+	}
 	db.conn.exec(ctx, fmt.Sprintf("DROP DATABASE [%s]", settings.Name))
 }
 
